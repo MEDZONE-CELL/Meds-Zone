@@ -25,6 +25,7 @@
       justify-content: center;
       background: #2a5298;
       padding: 10px;
+      flex-wrap: wrap;
     }
 
     nav a {
@@ -46,16 +47,11 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
     .note {
       background: #eef3ff;
       padding: 15px;
       border-radius: 10px;
+      margin-top: 10px;
     }
 
     footer {
@@ -63,6 +59,18 @@
       padding: 20px;
       background: #1e3c72;
       color: white;
+    }
+
+    details {
+      background: #eef3ff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -88,159 +96,73 @@
     <p>Hello, I'm Josphat, a dedicated medical student passionate about clinical practice and patient care.</p>
   </div>
 
+  <!-- NOTES -->
   <div class="card" id="notes">
-    <h2>Medical Notes</h2>
-    <div class="grid">
-      <div class="note">
-        <h3>Pulmonary TB</h3>
-        <p>Diagnosis and management</p>
-      </div>
+    <h2>📚 Medical Notes</h2>
 
-      <div class="note">
-        <h3>Anemia</h3>
-        <p>Types and treatment</p>
-      </div>
+    <div class="note">
+      <h3>Pulmonary TB</h3>
+      <p>Diagnosis and management</p>
+    </div>
 
-      <div class="note">
-        <h3>Drugs</h3>
-  <div class="card">
-  <h2>💊 Drugs</h2>
+    <div class="note">
+      <h3>Anemia</h3>
+      <p>Types and treatment</p>
+    </div>
 
-  <div class="note">
-    <h3>Gentamicin</h3>
+    <div class="note">
+      <h3>💊 Drugs</h3>
 
-    <p><strong>Class:</strong> Aminoglycoside antibiotic</p>
-
-    <p><strong>Uses:</strong></p>
-    <ul>
-      <li>Severe infections (sepsis)</li>
-      <li>Gram-negative infections</li>
-    </ul>
-
-    <p><strong>Route:</strong> IV / IM</p>
-
-    <p><strong>Important:</strong></p>
-    <ul>
-      <li>Monitor renal function</li>
-      <li>Risk of ototoxicity</li>
-    </ul>
-  </div>
-
-  <div class="note">
-    <h3>Dexamethasone</h3>
-
-    <p><strong>Class:</strong> Corticosteroid</p>
-
-    <p><strong>Uses:</strong></p>
-    <ul>
-      <li>Inflammation</li>
-      <li>Allergic reactions</li>
-      <li>Cerebral edema</li>
-    </ul>
-
-    <p><strong>Route:</strong> IV / Oral</p>
-
-    <p><strong>Important:</strong></p>
-    <ul>
-      <li>Immunosuppression</li>
-      <li>Monitor glucose</li>
-    </ul>
-  </div>
-
-  <div class="note">
-    <h3>Lignocaine</h3>
-
-    <p><strong>Class:</strong> Local anesthetic</p>
-
-    <p><strong>Uses:</strong></p>
-    <ul>
-      <li>Local anesthesia</li>
-      <li>Arrhythmias (IV use)</li>
-    </ul>
-
-    <p><strong>Route:</strong> Local / IV</p>
-
-    <p><strong>Important:</strong></p>
-    <ul>
-      <li>Avoid overdose</li>
-      <li>Can cause CNS toxicity</li>
-    </ul>
-  </div>
-
-  </div>
-      </div>
+      <p><strong>Gentamicin:</strong> Severe infections, monitor renal function</p>
+      <p><strong>Dexamethasone:</strong> Inflammation, allergic reactions</p>
+      <p><strong>Lignocaine:</strong> Local anesthesia, arrhythmias</p>
     </div>
   </div>
 
+  <!-- CASES -->
   <div class="card" id="cases">
-  <h2>🧠 Clinical Cases</h2>
+    <h2>🧠 Clinical Cases</h2>
 
-  <div class="note">
-    <h3>Case 1: Suspected Pulmonary TB with Shock</h3>
+    <details>
+      <summary>Case 1: Pulmonary TB with Shock (Click)</summary>
 
-    <p><strong>Patient:</strong> 33-year-old male</p>
-    <p><strong>Presentation:</strong> Generalized body pain and non-productive cough for 2 weeks</p>
+      <p><strong>Patient:</strong> 33-year-old male</p>
+      <p><strong>BP:</strong> 83/42 | <strong>Pulse:</strong> 110</p>
 
-    <p><strong>Vitals:</strong></p>
-    <ul>
-      <li>BP: 83/42 mmHg</li>
-      <li>Pulse: 110 bpm</li>
-    </ul>
+      <p><strong>Impression:</strong> TB + Septic Shock</p>
 
-    <p><strong>Impression:</strong></p>
-    <p>Pulmonary TB with possible septic shock</p>
+      <p><strong>Management:</strong></p>
+      <ul>
+        <li>IV fluids</li>
+        <li>Antibiotics</li>
+        <li>GeneXpert</li>
+      </ul>
+    </details>
 
-    <p><strong>Reasoning:</strong></p>
-    <ul>
-      <li>Low BP → hypotension</li>
-      <li>Tachycardia → compensatory response</li>
-      <li>Infection (TB) → possible sepsis</li>
-    </ul>
+    <details>
+      <summary>Case 2: Severe Anemia in HIV (Click)</summary>
 
-    <p><strong>Next Steps:</strong></p>
-    <ul>
-      <li>Calculate MAP</li>
-      <li>Start IV fluids</li>
-      <li>Send labs (FBC, cultures)</li>
-      <li>Confirm TB (GeneXpert)</li>
-    </ul>
-<div class="card">
-  <h3>Case 2: Severe Anemia in HIV Patient</h3>
+      <p><strong>Patient:</strong> 28-year-old female</p>
+      <p><strong>Hb:</strong> 6.5 g/dL</p>
 
-  <p><strong>Patient:</strong> 28-year-old female</p>
+      <p><strong>Impression:</strong> Severe anemia</p>
 
-  <p><strong>Presentation:</strong> Fatigue, dizziness, and shortness of breath for 1 week</p>
-
-  <p><strong>Vitals:</strong></p>
-  <ul>
-    <li>BP: 100/60 mmHg</li>
-    <li>Pulse: 105 bpm</li>
-  </ul>
-
-  <p><strong>Findings:</strong></p>
-  <ul>
-    <li>Pale conjunctiva</li>
-    <li>Hb: 6.5 g/dL</li>
-    <li>Known HIV positive on ART</li>
-  </ul>
-
-  <p><strong>Impression:</strong></p>
-  <p>Severe anemia in HIV patient (likely iron deficiency or chronic disease)</p>
-
-  <p><strong>Management:</strong></p>
-  <ul>
-    <li>Blood transfusion</li>
-    <li>Investigate cause (MCV, iron studies)</li>
-    <li>Continue ART</li>
-  </ul>
-</div>
-  </div>
+      <p><strong>Management:</strong></p>
+      <ul>
+        <li>Blood transfusion</li>
+        <li>Iron studies</li>
+        <li>Continue ART</li>
+      </ul>
+    </details>
 
   </div>
 
+  <!-- CONTACT -->
   <div class="card" id="contact">
-    <h2>Contact</h2>
-    <p>Reach out for collaboration or sharing notes.</p>
+    <h2>📩 Contact</h2>
+    <p><strong>Name:</strong> Josphat</p>
+    <p><strong>Email:</strong> mwapejosphat12@email.com</p>
+    <p><strong>Phone:</strong> +260 XXX XXX XXX</p>
   </div>
 
 </div>
