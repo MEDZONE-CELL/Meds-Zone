@@ -1,86 +1,54 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Med's Zone</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Med's Zone 🩺</title>
 
 <style>
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff, #fbc2eb);
-  color: #333;
-}
-
-/* HEADER */
-header {
+  background: linear-gradient(135deg, #74ebd5, #ACB6E5);
   text-align: center;
-  padding: 60px 20px;
-  color: #1e2a4a;
 }
 
-header h1 {
+header {
+  padding: 40px 20px;
+}
+
+h1 {
   font-size: 40px;
 }
 
-/* CARD GRID */
-.dashboard {
+.container {
   display: flex;
-  justify-content: center;
-  gap: 30px;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
   padding: 20px;
 }
 
 .card {
   background: white;
   width: 260px;
-  padding: 25px;
+  padding: 30px;
   border-radius: 20px;
-  text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: black;
   transition: 0.3s;
-  cursor: pointer;
 }
 
 .card:hover {
-  transform: translateY(-8px);
+  transform: scale(1.05);
 }
 
 .card h2 {
   margin-top: 10px;
 }
 
-.icon {
-  font-size: 50px;
-}
-
-/* SECTIONS */
-.section {
-  background: #f4f7fb;
-  margin: 40px 20px;
-  padding: 20px;
-  border-radius: 15px;
-}
-
-.note {
-  background: #eef3ff;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-/* EXPAND */
-details {
-  margin-top: 10px;
-}
-
-summary {
-  font-weight: bold;
-  cursor: pointer;
-}
 </style>
 </head>
 
@@ -88,106 +56,27 @@ summary {
 
 <header>
   <h1>Med's Zone 🩺</h1>
-  <p>Clinical Thinking • OSCE Skills • Quick Revision</p>
+  <p>Clinical Learning Made Simple</p>
 </header>
 
-<!-- DASHBOARD -->
-<div class="dashboard">
+<div class="container">
 
-  <div class="card" onclick="scrollToSection('cases')">
-    <div class="icon">🧠</div>
-    <h2>Clinical Cases</h2>
-    <p>Train your clinical reasoning</p>
-  </div>
+  <a href="cases.html" class="card">
+    <h2>🧠 Clinical Cases</h2>
+    <p>Real patient scenarios</p>
+  </a>
 
-  <div class="card" onclick="scrollToSection('osce')">
-    <div class="icon">🩺</div>
-    <h2>OSCE</h2>
-    <p>Examination & presentation skills</p>
-  </div>
+  <a href="osce.html" class="card">
+    <h2>🩺 OSCE</h2>
+    <p>Exams & structure</p>
+  </a>
 
-  <div class="card" onclick="scrollToSection('revision')">
-    <div class="icon">⚡</div>
-    <h2>Quick Revision</h2>
-    <p>High-yield medical facts</p>
-  </div>
+  <a href="revision.html" class="card">
+    <h2>⚡ Quick Revision</h2>
+    <p>High-yield facts</p>
+  </a>
 
 </div>
-
-<!-- CLINICAL CASES -->
-<div class="section" id="cases">
-  <h2>🧠 Clinical Cases</h2>
-
-  <details class="note">
-    <summary>Case 1: 33M with cough + hypotension</summary>
-
-    <p><strong>Presentation:</strong> Cough 2 weeks, body pain</p>
-    <p><strong>Vitals:</strong> BP 83/42, Pulse 110</p>
-
-    <p><strong>Question:</strong> What is your diagnosis?</p>
-
-    <details>
-      <summary>Show Answer</summary>
-
-      <p><strong>Impression:</strong> TB with septic shock</p>
-
-      <p><strong>Reasoning:</strong></p>
-      <ul>
-        <li>Hypotension → shock</li>
-        <li>Infection → sepsis</li>
-      </ul>
-
-      <p><strong>Management:</strong></p>
-      <ul>
-        <li>IV fluids</li>
-        <li>Antibiotics</li>
-      </ul>
-    </details>
-  </details>
-
-</div>
-
-<!-- OSCE -->
-<div class="section" id="osce">
-  <h2>🩺 OSCE</h2>
-
-  <details class="note">
-    <summary>SBAR</summary>
-    <p>S – Situation</p>
-    <p>B – Background</p>
-    <p>A – Assessment</p>
-    <p>R – Recommendation</p>
-  </details>
-
-  <details class="note">
-    <summary>Cardiovascular Exam</summary>
-    <ul>
-      <li>Inspection</li>
-      <li>Pulse</li>
-      <li>JVP</li>
-      <li>Auscultation</li>
-    </ul>
-  </details>
-</div>
-
-<!-- REVISION -->
-<div class="section" id="revision">
-  <h2>⚡ Quick Revision</h2>
-
-  <div class="note">
-    <p><strong>Gentamicin:</strong> Severe infections (watch kidneys)</p>
-    <p><strong>Dexamethasone:</strong> Inflammation</p>
-    <p><strong>Lignocaine:</strong> Local anesthesia</p>
-  </div>
-</div>
-
-<script>
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({
-    behavior: 'smooth'
-  });
-}
-</script>
 
 </body>
 </html>
