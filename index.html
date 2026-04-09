@@ -35,6 +35,19 @@
       font-weight: bold;
     }
 
+    .search-box {
+      text-align: center;
+      margin: 20px;
+    }
+
+    .search-box input {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
     .container {
       padding: 20px;
     }
@@ -47,6 +60,12 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
 
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
     .note {
       background: #eef3ff;
       padding: 15px;
@@ -54,23 +73,20 @@
       margin-top: 10px;
     }
 
+    details {
+      margin-top: 15px;
+    }
+
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     footer {
       text-align: center;
       padding: 20px;
       background: #1e3c72;
       color: white;
-    }
-
-    details {
-      background: #eef3ff;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
-    summary {
-      cursor: pointer;
-      font-weight: bold;
     }
   </style>
 </head>
@@ -89,63 +105,105 @@
   <a href="#contact">Contact</a>
 </nav>
 
-<div class="container">
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="Search anything..." onkeyup="searchContent()">
+</div>
 
-  <div class="card" id="about">
+<div class="container" id="content">
+
+  <!-- ABOUT -->
+  <div class="card">
     <h2>About Me</h2>
-    <p>Hello, I'm Josphat, a dedicated medical student passionate about clinical practice and patient care.</p>
+    <p>Hello, I'm Josphat, a dedicated medical student passionate about clinical practice.</p>
   </div>
 
   <!-- NOTES -->
-  <div class="card" id="notes">
-    <h2>📚 Medical Notes</h2>
+  <div class="card">
+    <h2>Medical Notes</h2>
 
-    <div class="note">
-      <h3>Pulmonary TB</h3>
-      <p>Diagnosis and management</p>
-    </div>
+    <div class="grid">
+      <div class="note">
+        <h3>Pulmonary TB</h3>
+        <p>Diagnosis and management</p>
+      </div>
 
-    <div class="note">
-      <h3>Anemia</h3>
-      <p>Types and treatment</p>
-    </div>
+      <div class="note">
+        <h3>Anemia</h3>
+        <p>Types and treatment</p>
+      </div>
 
-    <div class="note">
-      <h3>💊 Drugs</h3>
-
-      <p><strong>Gentamicin:</strong> Severe infections, monitor renal function</p>
-      <p><strong>Dexamethasone:</strong> Inflammation, allergic reactions</p>
-      <p><strong>Lignocaine:</strong> Local anesthesia, arrhythmias</p>
+      <div class="note">
+        <h3>💊 Drugs</h3>
+        <p>Gentamicin – severe infections</p>
+        <p>Dexamethasone – inflammation</p>
+        <p>Lignocaine – anesthesia</p>
+      </div>
     </div>
   </div>
 
   <!-- CASES -->
-  <div class="card" id="cases">
+  <div class="card">
     <h2>🧠 Clinical Cases</h2>
 
-    <details>
-      <summary>Case 1: Pulmonary TB with Shock (Click)</summary>
+    <details class="note">
+      <summary>Case 1: Pulmonary TB with Shock</summary>
 
       <p><strong>Patient:</strong> 33-year-old male</p>
-      <p><strong>BP:</strong> 83/42 | <strong>Pulse:</strong> 110</p>
 
-      <p><strong>Impression:</strong> TB + Septic Shock</p>
+      <p><strong>Presentation:</strong> Generalized body pain and non-productive cough for 2 weeks</p>
+
+      <p><strong>Vitals:</strong></p>
+      <ul>
+        <li>BP: 83/42 mmHg</li>
+        <li>Pulse: 110 bpm</li>
+      </ul>
+
+      <p><strong>Impression:</strong></p>
+      <p>Pulmonary TB with possible septic shock</p>
+
+      <p><strong>Reasoning:</strong></p>
+      <ul>
+        <li>Low BP → hypotension</li>
+        <li>Tachycardia → compensatory response</li>
+        <li>Infection → possible sepsis</li>
+      </ul>
 
       <p><strong>Management:</strong></p>
       <ul>
         <li>IV fluids</li>
-        <li>Antibiotics</li>
-        <li>GeneXpert</li>
+        <li>Broad-spectrum antibiotics</li>
+        <li>GeneXpert testing</li>
       </ul>
     </details>
 
-    <details>
-      <summary>Case 2: Severe Anemia in HIV (Click)</summary>
+    <details class="note">
+      <summary>Case 2: Severe Anemia in HIV</summary>
 
       <p><strong>Patient:</strong> 28-year-old female</p>
-      <p><strong>Hb:</strong> 6.5 g/dL</p>
 
-      <p><strong>Impression:</strong> Severe anemia</p>
+      <p><strong>Presentation:</strong> Fatigue, dizziness, shortness of breath</p>
+
+      <p><strong>Vitals:</strong></p>
+      <ul>
+        <li>BP: 100/60 mmHg</li>
+        <li>Pulse: 105 bpm</li>
+      </ul>
+
+      <p><strong>Findings:</strong></p>
+      <ul>
+        <li>Pale conjunctiva</li>
+        <li>Hb: 6.5 g/dL</li>
+        <li>HIV positive on ART</li>
+      </ul>
+
+      <p><strong>Impression:</strong></p>
+      <p>Severe anemia</p>
+
+      <p><strong>Reasoning:</strong></p>
+      <ul>
+        <li>Low Hb explains fatigue</li>
+        <li>HIV → chronic disease cause</li>
+      </ul>
 
       <p><strong>Management:</strong></p>
       <ul>
@@ -158,18 +216,29 @@
   </div>
 
   <!-- CONTACT -->
-  <div class="card" id="contact">
-    <h2>📩 Contact</h2>
-    <p><strong>Name:</strong> Josphat</p>
-    <p><strong>Email:</strong> mwapejosphat12@email.com</p>
-    <p><strong>Phone:</strong> +260 XXX XXX XXX</p>
+  <div class="card">
+    <h2>Contact</h2>
+    <p>Email: mwapejosphat12@email.com</p>
+    <p>Phone: +260 XXX XXX XXX</p>
   </div>
 
 </div>
 
 <footer>
-  <p>© 2026 Med's Zone | Built by Josphat</p>
+  <p>© 2026 Med's Zone</p>
 </footer>
+
+<script>
+function searchContent() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    let text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? "" : "none";
+  });
+}
+</script>
 
 </body>
 </html>
