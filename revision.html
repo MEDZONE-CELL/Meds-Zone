@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quick Revision — Med's Zone</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal: #0a7764; --teal-light: #e0f4ef; --teal-mid: #1d9e75;
+    --navy: #0d2137; --cream: #faf8f4; --text: #1a2a35;
+    --text-muted: #5a6a75; --border: rgba(0,0,0,0.08); --radius: 16px;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(250,248,244,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 60px; }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--teal); text-decoration: none; }
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; padding: 6px 14px; border-radius: 50px; transition: all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { background: var(--teal-light); color: var(--teal); }
+
+  .page { max-width: 960px; margin: 0 auto; padding: 50px 40px 80px; }
+  .page-tag { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+  .page-title { font-family: 'DM Serif Display', serif; font-size: 38px; color: var(--navy); letter-spacing: -0.5px; margin-bottom: 10px; }
+  .page-subtitle { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 36px; }
+
+  .search-bar { width: 100%; padding: 13px 18px; border-radius: 10px; border: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: white; outline: none; transition: border-color 0.2s; margin-bottom: 36px; display: block; }
+  .search-bar:focus { border-color: var(--teal-mid); }
+
+  .system { margin-bottom: 12px; border-radius: var(--radius); border: 1px solid var(--border); background: white; overflow: hidden; transition: box-shadow 0.2s; }
+  .system:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+
+  .system-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; cursor: pointer; user-select: none; list-style: none; gap: 12px; }
+  .system-header::-webkit-details-marker { display: none; }
+  .system-header-left { display: flex; align-items: center; gap: 14px; }
+  .system-icon { font-size: 22px; width: 42px; height: 42px; border-radius: 10px; background: var(--teal-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .system-title { font-size: 16px; font-weight: 500; color: var(--navy); }
+  .system-count { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .system-chevron { color: var(--text-muted); font-size: 12px; transition: transform 0.3s; flex-shrink: 0; }
+  details[open] .system-chevron { transform: rotate(180deg); }
+
+  .cards-wrap { padding: 0 20px 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; animation: fadeDown 0.25s ease; }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+
+  .card { background: var(--cream); border-radius: 12px; border: 1px solid var(--border); padding: 18px 20px; transition: all 0.2s; }
+  .card:hover { border-color: var(--teal-mid); background: white; box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+  .card-name { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .card-name::before { content: ''; width: 3px; height: 14px; background: var(--teal-mid); border-radius: 99px; display: inline-block; flex-shrink: 0; }
+
+  .fact-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start; }
+  .fact-label { font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: white; background: var(--teal-mid); padding: 2px 7px; border-radius: 4px; white-space: nowrap; margin-top: 2px; flex-shrink: 0; }
+  .fact-label.inv { background: #6c63a8; }
+  .fact-label.mx { background: #c0392b; }
+  .fact-text { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .fact-text strong { color: var(--text); font-weight: 500; }
+
+  .high-yield { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: #b45309; background: #fef3c7; padding: 2px 8px; border-radius: 4px; margin-left: auto; }
+
+  .no-results { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 15px; }
+  .no-results span { font-size: 36px; display: block; margin-bottom: 12px; }
+
+  footer { border-top: 1px solid var(--border); padding: 24px 40px; text-align: center; font-size: 13px; color: var(--text-muted); }
+
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; } .nav-links { display: none; }
+    .page { padding: 36px 20px 60px; } .page-title { font-size: 30px; }
+    .cards-wrap { grid-template-columns: 1fr; padding: 0 14px 14px; }
+    .system-header { padding: 16px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Med's Zone</a>
+  <ul class="nav-links">
+    <li><a href="cases.html">Clinical Cases</a></li>
+    <li><a href="osce.html">OSCE</a></li>
+    <li><a href="revision.html" class="active">Revision</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <div class="page-tag">Quick Revision</div>
+  <h1 class="page-title">High-Yield Facts by System</h1>
+  <p class="page-subtitle">Fast summaries of key conditions — presentation, investigations, and management. Tap any system to expand.</p>
+
+  <input class="search-bar" type="text" id="searchBar" placeholder="Search conditions (e.g. Stroke, TB, Sepsis...)" oninput="filterCards(this.value)" />
+
+  <div id="systemsContainer"></div>
+  <div class="no-results" id="noResults" style="display:none"><span>🔍</span>No conditions found for that search.</div>
+</div>
+
+<footer>Med's Zone · Educational use only · Not medical advice</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  REVISION DATA
+//  To add a condition, find the right system and add:
+//  {
+//    name: "Condition Name",
+//    highYield: true,          ← optional
+//    px: "Presentation",
+//    ix: "Investigations",     ← optional
+//    mx: "Management"          ← optional
+//  }
+//  To add a new system:
+//  { icon: "emoji", title: "System Name", conditions: [ ... ] }
+// ══════════════════════════════════════════════════════════
+const systems = [
+  {
+    icon: "🫁", title: "Respiratory",
+    conditions: [
+      { name: "Pneumonia", highYield: true, px: "Fever, productive cough, pleuritic chest pain, crackles, dullness to percussion", ix: "CXR (consolidation), sputum culture, WBC↑, CRP↑", mx: "Amoxicillin (mild CAP); co-amoxiclav or clarithromycin if severe. Use CURB-65 for admission decision" },
+      { name: "Pulmonary TB", highYield: true, px: "Chronic cough >2 weeks, haemoptysis, weight loss, night sweats, fever", ix: "GeneXpert (first-line), sputum AFB smear, CXR (upper lobe cavitation)", mx: "RHEZ for 2 months, then RH for 4 months. Notify public health" },
+      { name: "Asthma", highYield: true, px: "Episodic wheeze, shortness of breath, chest tightness, nocturnal cough. Triggers: allergens, exercise, cold", ix: "Spirometry — reversible obstruction (FEV1↑ >12% post-bronchodilator)", mx: "Step 1: SABA PRN. Step 2: add ICS. Step 3: add LABA. Acute: nebulised salbutamol + prednisolone" },
+      { name: "COPD", px: "Progressive dyspnoea, chronic productive cough, reduced exercise tolerance. Smoking history", ix: "Spirometry: FEV1/FVC <0.7 post-bronchodilator. CXR: hyperinflation", mx: "SABA/SAMA; add LABA/LAMA. Pulmonary rehab. Vaccinate. Smoking cessation is #1" },
+      { name: "Pleural Effusion", px: "Dyspnoea, dullness to percussion, reduced breath sounds, reduced tactile fremitus", ix: "CXR (blunting of costophrenic angle), USS guided pleural tap, Light's criteria", mx: "Treat cause. Therapeutic aspiration if symptomatic. Chest drain if large" },
+      { name: "Pulmonary Embolism", highYield: true, px: "Sudden dyspnoea, pleuritic chest pain, haemoptysis, tachycardia. Risk: DVT, immobility, OCP", ix: "D-dimer (if low probability), CTPA (gold standard), ECG: S1Q3T3", mx: "LMWH then warfarin/DOAC. Thrombolyse if massive PE with haemodynamic compromise" }
+    ]
+  },
+  {
+    icon: "❤️", title: "Cardiovascular",
+    conditions: [
+      { name: "Myocardial Infarction", highYield: true, px: "Crushing central chest pain radiating to left arm/jaw, sweating, nausea, dyspnoea. May be silent in diabetics", ix: "ECG (ST elevation in STEMI), troponin↑ (rises 3–6h), CXR", mx: "MONA: Morphine, O2, Nitrates, Aspirin. PCI within 90 min for STEMI. Heparin, clopidogrel" },
+      { name: "Heart Failure", highYield: true, px: "Dyspnoea on exertion, orthopnoea, PND, bilateral leg oedema, raised JVP, basal crackles", ix: "BNP↑, Echo (EF%), CXR (ABCDE: Alveolar oedema, Bat-wing, Cardiomegaly, Diversion, Effusion)", mx: "Furosemide (diuresis), ACEi/ARB, beta-blocker, spironolactone. Salt/fluid restriction" },
+      { name: "Hypertension", px: "Usually asymptomatic. Headache, visual disturbance in hypertensive crisis. BP >140/90 on 2 readings", ix: "Renal function, urine dip, ECG, fundoscopy. 24h BP monitoring", mx: "Step 1: ACEi or CCB. Step 2: ACEi + CCB. Step 3: add thiazide. Lifestyle: salt↓, exercise, weight↓" },
+      { name: "SVT", px: "Sudden palpitations, dizziness, chest discomfort. Narrow complex tachycardia 150–250 bpm on ECG", ix: "12-lead ECG (narrow complex, regular, no P waves)", mx: "Stable: vagal manoeuvres → IV adenosine 6mg then 12mg. Unstable: synchronised DC cardioversion" },
+      { name: "Atrial Fibrillation", px: "Palpitations, dyspnoea, dizziness. Irregularly irregular pulse. Risk of stroke", ix: "ECG: absent P waves, irregular RR interval. Echo, TFTs, renal function", mx: "Rate control: bisoprolol or digoxin. Rhythm control if <48h. Anticoagulate: CHA₂DS₂-VASc ≥2" }
+    ]
+  },
+  {
+    icon: "🍽️", title: "Gastrointestinal",
+    conditions: [
+      { name: "Peptic Ulcer Disease", px: "Epigastric pain — gastric ulcer worse with food; duodenal ulcer relieved by food. Nausea, bloating", ix: "H. pylori (urea breath test, stool antigen), OGD (gold standard)", mx: "PPI for 4–8 weeks. Triple therapy if H. pylori: PPI + amoxicillin + clarithromycin for 7 days" },
+      { name: "Acute Abdomen", highYield: true, px: "Severe abdominal pain, guarding, rigidity, rebound tenderness. May have absent bowel sounds", ix: "FBC, CRP, amylase, LFTs, AXR, erect CXR (free air), USS or CT", mx: "Surgical emergency — NBM, IV fluids, analgesia, urgent surgical review" },
+      { name: "Appendicitis", highYield: true, px: "Periumbilical pain migrating to RIF, anorexia, low fever, nausea/vomiting, Rovsing's sign", ix: "WBC↑, CRP↑, USS abdomen, CT if doubt", mx: "Appendicectomy (laparoscopic preferred). IV antibiotics pre-op" },
+      { name: "Liver Cirrhosis", px: "Jaundice, ascites, splenomegaly, spider naevi, caput medusae, palmar erythema, encephalopathy", ix: "LFTs, albumin↓, PT↑, USS abdomen, liver biopsy (gold standard)", mx: "Treat cause. Spironolactone for ascites. Propranolol for varices prophylaxis. List for transplant if end-stage" },
+      { name: "GI Bleed (Upper)", px: "Haematemesis or melaena, dizziness, hypotension, tachycardia. Risk: NSAIDs, alcohol, H. pylori", ix: "FBC (Hb↓), coagulation, crossmatch, OGD urgently", mx: "Resuscitate: IV access, fluids, blood transfusion. Urgent OGD for diagnosis and haemostasis. PPI IV" }
+    ]
+  },
+  {
+    icon: "🧠", title: "Neurology",
+    conditions: [
+      { name: "Stroke", highYield: true, px: "FAST: Face droop, Arm weakness, Speech difficulty, Time to call. Sudden onset. Ischaemic (85%) vs haemorrhagic", ix: "CT head urgently (exclude haemorrhage). MRI more sensitive. ECG (AF?), carotid Doppler", mx: "Ischaemic: thrombolyse (alteplase) if <4.5h and no contraindication. Aspirin 300mg. Stroke unit care" },
+      { name: "Meningitis", highYield: true, px: "Fever, severe headache, neck stiffness, photophobia, non-blanching rash (meningococcal). Kernig's and Brudzinski's signs", ix: "LP (cloudy CSF, neutrophils↑, protein↑, glucose↓). Blood cultures before antibiotics", mx: "Do not delay antibiotics — IV ceftriaxone immediately. Dexamethasone reduces complications. Isolate patient" },
+      { name: "Epilepsy", px: "Seizures — tonic-clonic, absence, focal. Postictal confusion. Aura may precede", ix: "EEG, MRI brain, blood glucose, electrolytes (exclude metabolic causes)", mx: "Sodium valproate (first-line generalised), carbamazepine (focal). Status epilepticus: IV lorazepam → phenytoin" },
+      { name: "Raised ICP", px: "Headache (worse in morning), vomiting, papilloedema, Cushing's triad: hypertension, bradycardia, irregular breathing", ix: "CT head (before LP!), MRI. Do not LP if raised ICP suspected", mx: "Elevate head 30°, mannitol IV, dexamethasone if cerebral oedema. Neurosurgery if mass lesion" }
+    ]
+  },
+  {
+    icon: "🩸", title: "Haematology",
+    conditions: [
+      { name: "Anaemia", highYield: true, px: "Fatigue, pallor, dizziness, exertional dyspnoea, palpitations, koilonychia (iron deficiency)", ix: "FBC (Hb↓, MCV), blood film, reticulocyte count, ferritin, B12/folate, LDH", mx: "Iron deficiency: oral ferrous sulphate. B12 deficiency: IM hydroxocobalamin. Haemolytic: treat cause" },
+      { name: "Sickle Cell Disease", px: "Vaso-occlusive crisis: severe bone/joint pain. Acute chest syndrome, stroke, priapism, splenic sequestration", ix: "FBC (Hb↓, sickle cells on film), Hb electrophoresis (HbSS), reticulocyte count↑", mx: "Crisis: IV fluids, strong analgesia (opioids), O2. Long-term: hydroxyurea, folic acid, vaccinations" },
+      { name: "DVT", px: "Unilateral calf swelling, warmth, redness, tenderness. Risk: Virchow's triad — stasis, hypercoagulability, endothelial injury", ix: "D-dimer (if low probability), compression USS Doppler (gold standard)", mx: "LMWH then DOAC (rivaroxaban/apixaban) for 3–6 months. Treat underlying cause" }
+    ]
+  },
+  {
+    icon: "🧪", title: "Endocrine",
+    conditions: [
+      { name: "Hypoglycaemia", highYield: true, px: "Sweating, tremor, palpitations, confusion, aggression, seizures, coma. BM <3.5 mmol/L", ix: "Capillary blood glucose, serum glucose, insulin/C-peptide if cause unclear", mx: "Conscious: oral glucose (Lucozade, glucogel). Unconscious: IV 50% dextrose or IM glucagon 1mg" },
+      { name: "Diabetic Ketoacidosis", highYield: true, px: "Polyuria, polydipsia, vomiting, abdominal pain, Kussmaul breathing, fruity breath. Type 1 DM", ix: "Blood glucose↑↑, ketones↑ (blood or urine), ABG (metabolic acidosis, pH<7.3, HCO3↓)", mx: "IV 0.9% saline (fluid replacement is #1). Fixed rate insulin infusion. K+ replacement. Monitor hourly" },
+      { name: "Hypothyroidism", px: "Weight gain, cold intolerance, constipation, fatigue, dry skin, bradycardia, depression, delayed reflexes", ix: "TSH↑, free T4↓. Check thyroid antibodies (TPO). Lipids, FBC", mx: "Levothyroxine — start low (25–50mcg), titrate every 6–8 weeks. Aim TSH 0.5–2.5" },
+      { name: "Hyperthyroidism", px: "Weight loss despite appetite↑, heat intolerance, tremor, palpitations, diarrhoea, goitre, exophthalmos (Graves')", ix: "TSH↓, free T4↑. Thyroid antibodies (TSH-R Ab in Graves'). Thyroid uptake scan", mx: "Carbimazole (block synthesis). Beta-blocker (propranolol) for symptoms. Radioiodine or surgery for definitive" }
+    ]
+  },
+  {
+    icon: "🦠", title: "Infectious Disease",
+    conditions: [
+      { name: "Malaria", highYield: true, px: "Cyclic fever, rigors, headache, myalgia, splenomegaly. Travel history to endemic area. Can cause cerebral malaria", ix: "Thick and thin blood film (x3 if first negative), RDT (malaria antigen test), FBC, LFTs, glucose", mx: "P. falciparum: artemether-lumefantrine (Coartem) or IV artesunate if severe. Others: chloroquine" },
+      { name: "HIV/AIDS", highYield: true, px: "Seroconversion: flu-like illness. Chronic: weight loss, lymphadenopathy, recurrent infections, opportunistic infections", ix: "HIV Ag/Ab combo test (4th generation), CD4 count, viral load. Screen for OIs (TB, CMV, PCP)", mx: "Start ART regardless of CD4. First-line: TDF + 3TC + DTG (dolutegravir). Cotrimoxazole prophylaxis if CD4<200" },
+      { name: "Sepsis", highYield: true, px: "Infection + organ dysfunction. qSOFA: altered mentation, RR>22, SBP<100. Fever or hypothermia", ix: "Blood cultures (x2 before antibiotics), FBC, lactate, CRP, renal/liver function, urine culture", mx: "Sepsis 6 within 1 hour: blood cultures, IV antibiotics, IV fluids, O2, urine output monitoring, lactate" }
+    ]
+  },
+  {
+    icon: "🚨", title: "Emergency",
+    conditions: [
+      { name: "Shock", highYield: true, px: "Hypotension, tachycardia, pale/cool/clammy skin, reduced GCS, oliguria. Types: hypovolaemic, septic, cardiogenic, anaphylactic", ix: "FBC, U&E, LFTs, lactate, blood cultures, ECG, Echo if cardiogenic", mx: "Hypovolaemic: IV crystalloid bolus. Septic: fluids + antibiotics. Cardiogenic: inotropes. Anaphylactic: IM adrenaline" },
+      { name: "Anaphylaxis", highYield: true, px: "Urticaria, angioedema, bronchospasm, hypotension, tachycardia after allergen exposure. Airway compromise", ix: "Clinical diagnosis. Serum tryptase (confirms, not acute management)", mx: "IM adrenaline 0.5mg (1:1000) immediately. O2, IV fluids, antihistamine, hydrocortisone. Lie flat, legs up" },
+      { name: "Cardiac Arrest", highYield: true, px: "Unresponsive, not breathing normally, no pulse. Shockable: VF/pVT. Non-shockable: PEA/asystole", ix: "ECG rhythm analysis during CPR. ABG, electrolytes, glucose. Identify 4Hs and 4Ts", mx: "CPR 30:2. Defibrillate if shockable. Adrenaline 1mg IV every 3–5 min. Treat reversible causes" }
+    ]
+  },
+  {
+    icon: "🫘", title: "Renal",
+    conditions: [
+      { name: "Acute Kidney Injury", highYield: true, px: "Oliguria (<0.5ml/kg/hr), rising creatinine, oedema, hypertension. Causes: pre-renal, renal, post-renal", ix: "U&E (creatinine↑, K+↑), urine dip, USS renal (exclude obstruction), urine Na+", mx: "Identify and treat cause. Pre-renal: IV fluids. Post-renal: relieve obstruction. Treat hyperkalaemia urgently" },
+      { name: "Urinary Tract Infection", px: "Dysuria, frequency, urgency, suprapubic pain. Fever and loin pain suggest pyelonephritis", ix: "Urine dip (nitrites, leucocytes), MSU MC&S (gold standard)", mx: "Lower UTI: nitrofurantoin or trimethoprim 3–7 days. Pyelonephritis: ciprofloxacin 7–14 days or IV ceftriaxone if severe" }
+    ]
+  }
+
+  // ── ADD MORE SYSTEMS OR CONDITIONS HERE ──
+];
+
+// ══════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════
+function render(filter) {
+  const q = (filter || '').toLowerCase().trim();
+  const container = document.getElementById('systemsContainer');
+  let anyVisible = false;
+
+  container.innerHTML = systems.map(sys => {
+    const filtered = q
+      ? sys.conditions.filter(c =>
+          c.name.toLowerCase().includes(q) ||
+          (c.px||'').toLowerCase().includes(q) ||
+          (c.mx||'').toLowerCase().includes(q)
+        )
+      : sys.conditions;
+
+    if (filtered.length === 0) return '';
+    anyVisible = true;
+
+    const cardsHTML = filtered.map(c => `
+      <div class="card">
+        <div class="card-name">
+          ${c.name}
+          ${c.highYield ? '<span class="high-yield">⚡ High yield</span>' : ''}
+   
