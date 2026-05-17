@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OSCE Guide — Med's Zone</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal: #0a7764; --teal-light: #e0f4ef; --teal-mid: #1d9e75;
+    --navy: #0d2137; --cream: #faf8f4; --text: #1a2a35;
+    --text-muted: #5a6a75; --border: rgba(0,0,0,0.08); --radius: 16px;
+    --blue-light: #eff6ff; --gray-light: #f2f0eb;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(250,248,244,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 60px; }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--teal); text-decoration: none; }
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; padding: 6px 14px; border-radius: 50px; transition: all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { background: var(--teal-light); color: var(--teal); }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 50px 40px 80px; }
+  .page-tag { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+  .page-title { font-family: 'DM Serif Display', serif; font-size: 38px; color: var(--navy); letter-spacing: -0.5px; margin-bottom: 10px; }
+  .page-subtitle { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 48px; }
+
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .stations { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+
+  .station { background: white; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; transition: box-shadow 0.2s; }
+  .station:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+
+  .station-summary { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; cursor: pointer; list-style: none; gap: 12px; }
+  .station-summary::-webkit-details-marker { display: none; }
+  .station-left { display: flex; align-items: center; gap: 14px; }
+  .station-badge { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .badge-blue { background: var(--blue-light); }
+  .station-title { font-size: 15px; font-weight: 500; color: var(--navy); }
+  .station-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .station-chevron { color: var(--text-muted); font-size: 12px; transition: transform 0.3s; flex-shrink: 0; }
+  details[open] .station-chevron { transform: rotate(180deg); }
+
+  .station-body { padding: 0 24px 24px; animation: fadeDown 0.25s ease; }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+
+  .station-scenario { background: var(--navy); color: rgba(255,255,255,0.9); border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; font-size: 14px; line-height: 1.7; }
+  .station-scenario strong { color: white; }
+
+  .station-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .info-block { background: var(--cream); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--border); }
+  .info-block-title { font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .info-block ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .info-block li { font-size: 13px; color: var(--text-muted); display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
+  .info-block li::before { content: '→'; color: var(--teal-mid); font-weight: 500; flex-shrink: 0; }
+
+  .diagnosis-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--teal-light); color: var(--teal); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 8px; margin-top: 16px; }
+
+  .timed-card { background: white; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; margin-bottom: 48px; }
+  .timed-header { background: var(--navy); padding: 24px 28px; display: flex; align-items: center; gap: 16px; }
+  .timed-icon { font-size: 28px; }
+  .timed-header-text h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; font-weight: 400; margin-bottom: 4px; }
+  .timed-header-text p { font-size: 13px; color: rgba(255,255,255,0.5); }
+  .timed-body { padding: 24px 28px; }
+  .timed-steps { display: flex; flex-direction: column; gap: 12px; }
+  .timed-step { display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--teal-light); color: var(--teal); font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 14px; color: var(--text-muted); line-height: 1.6; padding-top: 4px; }
+  .step-text strong { color: var(--text); font-weight: 500; }
+  .timed-tip { margin-top: 20px; background: #fff8e7; border: 1px solid #fde08a; border-radius: 10px; padding: 14px 18px; font-size: 13px; color: #7a5c00; display: flex; gap: 10px; align-items: flex-start; }
+
+  .frameworks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 48px; }
+  .framework-card { background: white; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+  .framework-header { padding: 18px 22px; border-bottom: 1px solid var(--border); }
+  .framework-header h3 { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--navy); font-weight: 400; margin-bottom: 4px; }
+  .framework-header p { font-size: 12px; color: var(--text-muted); }
+  .framework-body { padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .framework-row { display: flex; gap: 12px; align-items: flex-start; }
+  .framework-letter { width: 32px; height: 32px; border-radius: 8px; background: var(--navy); color: white; font-family: 'DM Serif Display', serif; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .framework-content strong { font-size: 14px; font-weight: 500; color: var(--navy); display: block; margin-bottom: 2px; }
+  .framework-content span { font-size: 13px; color: var(--text-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 24px 40px; text-align: center; font-size: 13px; color: var(--text-muted); }
+
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; } .nav-links { display: none; }
+    .page { padding: 36px 20px 60px; } .page-title { font-size: 30px; }
+    .station-grid { grid-template-columns: 1fr; }
+    .frameworks { grid-template-columns: 1fr; }
+    .station-summary { padding: 16px 18px; }
+    .station-body { padding: 0 18px 18px; }
+    .timed-header { padding: 20px; }
+    .timed-body { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Med's Zone</a>
+  <ul class="nav-links">
+    <li><a href="cases.html">Clinical Cases</a></li>
+    <li><a href="osce.html" class="active">OSCE</a></li>
+    <li><a href="revision.html">Revision</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <div class="page-tag">OSCE Preparation</div>
+  <h1 class="page-title">OSCE Guide</h1>
+  <p class="page-subtitle">Structured station breakdowns, clinical frameworks, and exam technique — everything you need to perform with confidence.</p>
+
+  <div class="section-label">🔵 OSCE Scenarios</div>
+  <div class="stations">
+
+    <details class="station">
+      <summary class="station-summary">
+        <div class="station-left">
+          <div class="station-badge badge-blue">🫀</div>
+          <div>
+            <div class="station-title">Case 1: Chest Pain (ER)</div>
+            <div class="station-meta">History taking · Risk assessment · Management plan</div>
+          </div>
+        </div>
+        <span class="station-chevron">▼</span>
+      </summary>
+      <div class="station-body">
+        <div class="station-scenario">
+          <strong>Scenario:</strong> A 55-year-old male presents to the emergency department with sudden-onset chest pain. He looks pale and sweaty.
+        </div>
+        <div class="station-grid">
+          <div class="info-block">
+            <div class="info-block-title">Your Task</div>
+            <ul>
+              <li>Take a focused history</li>
+              <li>Assess cardiovascular risk factors</li>
+              <li>Give a working diagnosis and management plan</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-title">Key Questions to Ask</div>
+            <ul>
+              <li>Onset, character, radiation of pain?</li>
+              <li>Associated symptoms — sweating, SOB, nausea?</li>
+              <li>Risk factors — HTN, diabetes, smoking, family history?</li>
+              <li>Previous cardiac history or medications?</li>
+            </ul>
+          </div>
+        </div>
+        <div class="diagnosis-tag">🎯 Likely Diagnosis: Acute Coronary Syndrome</div>
+      </div>
+    </details>
+
+    <details class="station">
+      <summary class="station-summary">
+        <div class="station-left">
+          <div class="station-badge badge-blue">🫁</div>
+          <div>
+            <div class="station-title">Case 2: Shortness of Breath</div>
+            <div class="station-meta">Airway assessment · Respiratory exam · Differential diagnosis</div>
+          </div>
+        </div>
+        <span class="station-chevron">▼</span>
+      </summary>
+      <div class="station-body">
+        <div class="station-scenario">
+          <strong>Scenario:</strong> A 30-year-old presents with sudden difficulty breathing. She appears anxious and is using accessory muscles.
+        </div>
+        <div class="station-grid">
+          <div class="info-block">
+            <div class="info-block-title">Your Task</div>
+            <ul>
+              <li>Assess airway and breathing first</li>
+              <li>Perform a focused respiratory examination</li>
+              <li>Give a differential diagnosis with reasoning</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-title">Differentials to Consider</div>
+            <ul>
+              <li>Asthma (most likely given age)</li>
+              <li>Pneumonia</li>
+              <li>Pulmonary embolism</li>
+              <li>Pneumothorax</li>
+              <li>Anxiety / hyperventilation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="station">
+      <summary class="station-summary">
+        <div class="station-left">
+          <div class="station-badge badge-blue">🩸</div>
+          <div>
+            <div class="station-title">Case 3: Severe Anaemia</div>
+            <div class="station-meta">Severity assessment · Cause identification · Management</div>
+          </div>
+        </div>
+        <span class="station-chevron">▼</span>
+      </summary>
+      <div class="station-body">
+        <div class="station-scenario">
+          <strong>Scenario:</strong> A patient presents with progressive fatigue and pallor. Hb is reported as 6.5 g/dL on FBC.
+        </div>
+        <div class="station-grid">
+          <div class="info-block">
+            <div class="info-block-title">Your Task</div>
+            <ul>
+              <li>Identify severity and symptoms</li>
+              <li>Investigate for the underlying cause</li>
+              <li>Plan appropriate management</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-title">Management Steps</div>
+            <ul>
+              <li>Blood transfusion if Hb &lt;7 or symptomatic</li>
+              <li>Iron studies, B12/folate, reticulocyte count</li>
+              <li>Blood film to identify cell morphology</li>
+              <li>Treat the underlying cause</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <div class="section-label">🟢 Timed OSCE Mode</div>
+  <div class="timed-card">
+    <div class="timed-header">
+      <div class="timed-icon">⏱️</div>
+      <div class="timed-header-text">
+        <h2>How to Practice Timed Stations</h2>
+        <p>Give yourself 5–7 minutes per station — same as the real exam</p>
+      </div>
+    </div>
+    <div class="timed-body">
+      <div class="timed-steps">
+        <div class="timed-step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Introduce yourself</strong> — name, role, confirm patient identity</div>
+        </div>
+        <div class="timed-step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Take a focused history</strong> — use SOCRATES for pain, OLDCART for symptoms</div>
+        </div>
+        <div class="timed-step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Perform relevant examination</strong> — expose, inspect, palpate, percuss, auscultate</div>
+        </div>
+        <div class="timed-step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Give impression and plan</strong> — working diagnosis, investigations, immediate management</div>
+        </div>
+      </div>
+      <div class="timed-tip">
+        ⚠️ <span><strong>Examiner tip:</strong> Always wash hands, gain consent, and maintain patient dignity — these are easy marks that students frequently miss under pressure.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">⚪ Clinical Frameworks</div>
+  <div class="frameworks">
+
+    <div class="framework-card">
+      <div class="framework-header">
+        <h3>ABCDE Approach</h3>
+        <p>For any acutely unwell patient</p>
+      </div>
+      <div class="framework-body">
+        <div class="framework-row">
+          <div class="framework-letter">A</div>
+          <div class="framework-content">
+            <strong>Airway</strong>
+            <span>Check if patient can speak; look for obstruction</span>
+          </div>
+        </div>
+        <div class="framework-row">
+          <div class="framework-letter">B</div>
+          <div class="framework-content">
+            <strong>Breathing</strong>
+            <span>RR, SpO₂, chest movement, auscultate</span>
+          </div>
+        </div>
+        <div class="framework-row">
+          <div class="framework-letter">C</div>
+          <div class="framework-content">
+            <strong>Circulation</strong>
+            <span>Pulse, BP, cap refill, skin colour</span>
+          </div>
+        </div>
+        <div class="framework-row">
+          <div class="framework-letter">D</div>
+          <div class="framework-content">
+            <strong>Disability</strong>
+            <span>GCS/AVPU, pupils, blood glucose</span>
+          </div>
+        </div>
+        <div class="framework-row">
+          <div class="framework-letter">E</div>
+          <div class="framework-content">
+            <strong>Exposure</strong>
+            <span>Full body exam; temperature; look for rashes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="framework-card">
+      <div class="framework-header">
+        <h3>SBAR Communication</h3>
+        <p>For handovers and escalating concerns</p>
+      </div>
+      <div class="framework-body">
+        <div class="framework-row">
+          <div class="framework-letter">S</div>
+          <div class="framework-content">
+            <strong>Situation</strong>
+            <span>Who you are, who the patient is, the current problem</span>
+          </div>
+        </div>
+        <div class="framework-row">
+          <div class="framework-letter">B</div>
+          <div class="framework-content">
+            <strong>Background</strong>
+            <span>Relevant medical history, medications, allergies</span>
+          </div>
+        </div>
+        <div class="framework-row">
+          <div class="framework-letter">A</div>
+          <div class="framework-content">
+            <strong>Assessment</strong>
+            <span>Your clinical impression — what you think is happening</span>
+          </div>
+        </div>
+        <div class="framework-row">
+          <div class="framework-letter">R</div>
+          <div class="framework-content">
+            <strong>Recommendation</strong>
+            <span>What you need — review, investigation, medication</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>Med's Zone · Educational use only · Not medical advice</footer>
+
+</body>
+    </html>
